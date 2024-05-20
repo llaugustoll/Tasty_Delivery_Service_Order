@@ -1,0 +1,37 @@
+services:
+  tasty_delivery_order:
+    # image: llaugustoll/tasty_delivery_svc_order:v1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sistema-tasty-svc-order
+    environment:
+      DB_USERNAME: postgres
+      DB_PASSWORD: password
+      DB_HOST: postgres_order_db:5432
+      DB_DATABASE: tasty_delivery_order
+    volumes:
+      - ./tasty_delivery:/tasty_delivery/
+    ports:
+      - "8002:8000"
+    networks:
+      - tasty_delivery_service_main_compose-bridge
+    depends_on:
+      - postgres_order_db
+
+  postgres_order_db:
+    image: postgres
+    container_name: tasty_postgres_msvc_order
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: tasty_delivery_order
+      POSTGRES_HOST: postgres_order_db:5672
+    ports:
+      - "5434:5432"
+    networks:
+      - tasty_delivery_service_main_compose-bridge
+
+networks:
+  tasty_delivery_service_main_compose-bridge:
+    external: true
