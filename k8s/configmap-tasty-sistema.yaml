@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-tasty-sistema-tasty-svc-order
+data:
+  DB_USERNAME: postgres
+  DB_PASSWORD: password
+  DB_HOST: rds-tasty-delivery-product.cpbgig5i32fe.us-east-1.rds.amazonaws.com:5432
+  # DB_HOST: svc-tasty-db-product:5432 #host para usar k8s Local
+  DB_DATABASE: tasty_delivery
+

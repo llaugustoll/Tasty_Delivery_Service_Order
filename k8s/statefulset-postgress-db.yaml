@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-postgres-db-product
+spec:
+  selector:
+    matchLabels:
+      app: db-tasty-product # has to match .spec.template.metadata.labels
+  serviceName: svc-tasty-service-order
+  replicas: 1 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      name: db-tasty-order
+      labels:
+        app: db-tasty-order # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: db-tasty-order
+        image: postgres
+        ports:
+        - containerPort: 5432
+          name: postgres
+        envFrom:
+          - configMapRef:
+             name: db-configmap-svc-order
+        volumeMounts:
+        - name: postgres-persist
+          mountPath: /var/lib/postgresql/data 
+          # para configurar acesso para montar o volume do path a cima é preciso adicionar uma variavel no docker conforme orientação da documentação
+      volumes:
+        - name: postgres-persist
+          persistentVolumeClaim: 
+            claimName: volume-postgres-order
