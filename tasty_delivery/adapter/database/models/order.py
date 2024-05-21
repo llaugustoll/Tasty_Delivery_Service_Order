@@ -14,7 +14,6 @@ class Order(Base):
     total = Column(Float)
     discount = Column(Float)
     status = Column(String)
-    product_association = relationship('OrderProductAssociation', back_populates='order')
 
     is_active = Column(Boolean, default=True)
     is_deleted = Column(Boolean, default=False)
