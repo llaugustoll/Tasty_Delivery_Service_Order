@@ -1,3 +1,4 @@
+
 from abc import abstractmethod, ABC
 
 
@@ -8,7 +9,7 @@ class IBaseRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get_by_id(self, id):
+    def get_by_id(self, _id):
         raise NotImplementedError
 
     @abstractmethod
@@ -16,9 +17,9 @@ class IBaseRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def update(self, id, new_values):
+    def update(self, _id, new_values):
         raise NotImplementedError
 
     @abstractmethod
-    def delete(self, id, current_user):
+    def delete(self, _id, current_user):
         raise NotImplementedError

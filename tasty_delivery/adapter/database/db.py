@@ -1,10 +1,10 @@
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists, create_database
 
-from logger import logger
-from settings import settings
+from tasty_delivery.settings import settings
 
 SQLALCHEMY_DATABASE_URL = f"postgresql+psycopg2://{settings.DB_USERNAME}:{settings.DB_PASSWORD}@{settings.DB_HOST}/{settings.DB_DATABASE}"
 

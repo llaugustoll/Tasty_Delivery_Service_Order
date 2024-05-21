@@ -1,14 +1,14 @@
+
 from typing import List
 
 from sqlalchemy.exc import IntegrityError
 
-from adapter.database.models.order import Order as OrderDb
-from adapter.database.models.order_product_association import OrderProductAssociation
-from core.domain.repositories.iorder_repository import IOrderRepository
+from tasty_delivery.adapter.database.models.order import Order as OrderDb
+from tasty_delivery.adapter.database.models.order_product_association import OrderProductAssociation
+from tasty_delivery.core.domain.repositories.iorder_repository import IOrderRepository
 
 
 class OrderRepository(IOrderRepository):
-
     def __init__(self, db=None):
         self.db = db
 
@@ -16,11 +16,8 @@ class OrderRepository(IOrderRepository):
         result = self.db.query(OrderDb).all()
         return result
 
-    def get_by_id(self, id) -> OrderDb:
-        return self.db.query(OrderDb).filter(OrderDb.id == id).scalar()
-
-    def get_by_client(self, client_id) -> List[OrderDb]:
-        return self.db.query(OrderDb).filter(OrderDb.client_id == client_id).all()
+    def get_by_id(self, _id) -> OrderDb:
+        return self.db.query(OrderDb).filter(OrderDb.id == _id).scalar()
 
     def create(self, obj: List[OrderProductAssociation]):
         try:
@@ -34,21 +31,24 @@ class OrderRepository(IOrderRepository):
             raise e
         return obj
 
-    def update(self, id, new_values):
-        self.db.query(OrderDb).filter(OrderDb.id == id).update(new_values)
+    def update(self, _id, new_values):
+        self.db.query(OrderDb).filter(OrderDb.id == _id).update(new_values)
         self.db.flush()
         self.db.commit()
-        return self.get_by_id(id)
+        return self.get_by_id(_id)
 
-    def delete(self, id):
-        order = self.db.query(OrderDb).filter(OrderDb.id == id).scalar()
+    def delete(self, _id, status):
+        order = self.db.query(OrderDb).filter(OrderDb.id == _id).scalar()
         if order:
             self.db.delete(order)
             self.db.commit()
         return None
 
-    def update_status(self, id, status):
-        self.db.query(OrderDb).filter(OrderDb.id == id).update(status)
+    def get_by_client(self, client_id) -> List[OrderDb]:
+        return self.db.query(OrderDb).filter(OrderDb.client_id == client_id).all()
+
+    def update_status(self, _id, status):
+        self.db.query(OrderDb).filter(OrderDb.id == _id).update(status)
         self.db.flush()
         self.db.commit()
-        return self.get_by_id(id)
+        return self.get_by_id(_id)

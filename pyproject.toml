@@ -19,7 +19,7 @@ python-multipart = "^0.0.6"
 passlib = "^1.7.4"
 pydantic = {extras = ["email"], version = "^2.4.2"}
 discordwebhook = "^1.0.3"
-coverage = "^7.5*"
+coverage = "^7.5"
 
 [build-system]
 requires = ["poetry-core"]

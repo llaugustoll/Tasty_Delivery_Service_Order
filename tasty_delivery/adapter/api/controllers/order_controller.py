@@ -1,17 +1,16 @@
+
 from typing import List
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends
 
-from adapter.database.db import get_db
-from core.application.use_cases.order.order_case import OrderCase
-from core.domain.entities.order import OrderOUT, OrderIN, OrderUpdate
-from core.domain.exceptions.exception_schema import ObjectNotFound, ObjectDuplicated
-from security.base import get_current_user
+from tasty_delivery.adapter.database.db import get_db
+from tasty_delivery.core.application.use_cases.order.order_case import OrderCase
+from tasty_delivery.core.domain.entities.order import OrderOUT, OrderIN, OrderUpdate
+from tasty_delivery.core.domain.exceptions.exception_schema import ObjectNotFound, ObjectDuplicated
 
 
 class OrderController:
-
     def __init__(self, order_case: OrderCase = None):
         self.router = APIRouter(tags=["Orders"], prefix="/orders")
         self.router.add_api_route(
@@ -109,11 +108,11 @@ class OrderController:
         """
         return self._order_case(db).get_all()
 
-    async def order_by_id(self, id: int, db=Depends(get_db)):
+    async def order_by_id(self, _id: int, db=Depends(get_db)):
         """
         Lista pedidos por {id}
         """
-        return self._order_case(db).get_by_id(id)
+        return self._order_case(db).get_by_id(_id)
 
     async def order_by_client(self, client_id: UUID, db=Depends(get_db)):
         """
@@ -121,41 +120,29 @@ class OrderController:
         """
         return self._order_case(db).get_by_client(client_id)
 
-    async def create(self, order: OrderIN, request: Request, db=Depends(get_db)):
+    async def create(self, order: OrderIN, db=Depends(get_db)):
         """
         Cria um pedido
         """
-        current_user = None
-        token = request.headers.get('Authorization')
-        if token:
-            current_user = get_current_user(token.split(' ')[1])
-        return self._order_case(db, current_user).create(order)
+        return self._order_case(db).create(order)
 
-    async def update(self,
-                     id: int,
-                     order_update: OrderUpdate,
-                     db=Depends(get_db),
-                     current_user=Depends(get_current_user)):
+    async def update(self, _id: int, order_update: OrderUpdate, db=Depends(get_db)):
         """
         Atualiza um pedido
         * Necessário permissionamento de usuário
         """
-        return await self._order_case(db, current_user=current_user).update(id, order_update)
+        return await self._order_case(db).update(_id, order_update)
 
-    async def delete(self, id: int, db=Depends(get_db), current_user=Depends(get_current_user)):
+    async def delete(self, _id: int, db=Depends(get_db)):
         """
         Deleta um pedido
         * Necessário permissionamento de usuário
         """
-        return self._order_case(db, current_user).delete(id)
+        return self._order_case(db).delete(_id)
 
-    async def update_status(self,
-                            id: int,
-                            status: str,
-                            db=Depends(get_db),
-                            current_user=Depends(get_current_user)):
+    async def update_status(self, _id: int, status: str, db=Depends(get_db)):
         """
         Atualiza status de um pedido
         * Necessário permissionamento de usuário
         """
-        return self._order_case(db=db, current_user=current_user).update_status(id, status)
+        return self._order_case(db=db).update_status(_id, status)

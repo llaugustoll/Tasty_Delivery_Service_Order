@@ -1,8 +1,8 @@
-from typing import Annotated, List
 
+from typing import Annotated, List
 from pydantic import Field
 
-from core.domain.entities.base_entity import Base
+from tasty_delivery.core.domain.entities.base import Base
 
 
 class ClientAuth(Base):

@@ -1,7 +1,7 @@
+
 import logging
 
 formatter = logging.Formatter('%(asctime)s - Process: %(process)d - %(module)s - %(levelname)s - %(message)s')
-
 
 # handlers
 console_handler = logging.StreamHandler()
