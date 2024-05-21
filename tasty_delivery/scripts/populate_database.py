@@ -20,12 +20,12 @@ def populate():
         session.execute(
             text(
                 f'''
-                INSERT INTO users (id, total, discount, status, is_active, is_deleted, created_at, updated_at)
+                INSERT INTO orders (id, total, discount, status, is_active, is_deleted, created_at, updated_at)
                 VALUES 
-                    ('{order_1_id}', '25', '0', 'RECEBIDO', true, false, '{datetime.utcnow()}', null'),
-                    ('{order_2_id}', '50', '0', 'RECEBIDO', true, false, '{datetime.utcnow()}', null'),
-                    ('{order_3_id}', '30', '0', 'PRONTO', ' true, false, '{datetime.utcnow()}', null'),
-                    ('{order_4_id}', '40', '0', 'PRONTO', true, false, '{datetime.utcnow()}', null')
+                    (1, '25', '0', 'RECEBIDO', true, false, '{datetime.utcnow()}', null),
+                    (2, '50', '0', 'RECEBIDO', true, false, '{datetime.utcnow()}', null),
+                    (3, '30', '0', 'PRONTO', true, false, '{datetime.utcnow()}', null),
+                    (4, '40', '0', 'PRONTO', true, false, '{datetime.utcnow()}', null)
                 '''
             )
         )
