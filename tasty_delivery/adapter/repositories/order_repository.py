@@ -4,7 +4,6 @@ from typing import List
 from sqlalchemy.exc import IntegrityError
 
 from adapter.database.models.order import Order as OrderDb
-from adapter.database.models.order_product_association import OrderProductAssociation
 from core.domain.repositories.iorder_repository import IOrderRepository
 
 
