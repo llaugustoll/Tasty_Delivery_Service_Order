@@ -18,7 +18,7 @@ class OrderRepository(IOrderRepository):
     def get_by_id(self, _id) -> OrderDb:
         return self.db.query(OrderDb).filter(OrderDb.id == _id).scalar()
 
-    def create(self, obj: List[OrderProductAssociation]):
+    def create(self, obj):
         try:
             self.db.add_all(obj)
             self.db.flush()

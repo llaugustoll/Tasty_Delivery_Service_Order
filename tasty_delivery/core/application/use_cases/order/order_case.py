@@ -28,8 +28,6 @@ class OrderCase(IOrderCase):
         saida = []
 
         for order in results:
-            products_out = []
-
             order_out = {
                 "order_id": order.id,
                 "client_id": order.client_id,
@@ -38,16 +36,8 @@ class OrderCase(IOrderCase):
                 "status": order.status
             }
 
-            for product in order.products:
-                products_out.append({
-                    "product_id": product.id,
-                    "price": product.price,
-                    "quantity": product.order_association[0].quantity,
-                    "obs": product.order_association[0].obs,
-                })
-
             saida.append(
-                OrderOUT(**order_out, products=products_out)
+                OrderOUT(**order_out)
             )
 
         return saida
@@ -59,8 +49,6 @@ class OrderCase(IOrderCase):
             logger.warning(msg)
             raise ObjectNotFound(msg, 404)
 
-        products_out = []
-
         order_out = {
             "order_id": result.id,
             "client_id": result.client_id,
@@ -69,18 +57,9 @@ class OrderCase(IOrderCase):
             "status": result.status
         }
 
-        for product in result.products:
-            products_out.append({
-                "product_id": product.id,
-                "price": product.price,
-                "quantity": product.order_association[0].quantity,
-                "obs": product.order_association[0].obs,
-            })
-
-        return OrderOUT(**order_out, products=products_out)
+        return OrderOUT(**order_out)
 
     def create(self, order: OrderIN) -> OrderOUT:
-        associations = []
         client_id = self.current_user.id if self.current_user else None
         try:
             orderdb = OrderDB(
@@ -90,15 +69,7 @@ class OrderCase(IOrderCase):
                 client_id=client_id,
             )
 
-            for product in order.products:
-                association = OrderProductAssociation(
-                    order=orderdb,
-                    product=product.product_id,
-                    quantity=product.quantity,
-                )
-                associations.append(association)
-
-            result = self.repository.create(associations)
+            result = self.repository.create()
 
             return OrderOUT(
                 order_id=result[0].order_id,
@@ -135,12 +106,7 @@ class OrderCase(IOrderCase):
             discount=result.discount,
             total=result.total,
             status=result.status,
-            products=[
-                Product(
-                    product_id=product.id,
-                    quantity=product.order_association[0].quantity,
-                ) for product in result.products
-            ]
+            products=result.products
         )
 
     def update(self, _id, new_values: OrderUpdate) -> OrderOUT:
