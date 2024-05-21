@@ -13,7 +13,6 @@ class OrderIN(BaseModel):
 
 
 class OrderUpdate(BaseModel):
-    products: List[int] | None = Field()
     discount: float | None = Field(gte=0)
     total: float | None = Field(gte=0)
     status: str | None = Field(None)
@@ -21,7 +20,6 @@ class OrderUpdate(BaseModel):
 
 class OrderOUT(Base):
     order_id: int = Field(..., alias="order_id")
-    client_id: str | None = Field()
     products: List[int] | None = Field()
     discount: float | None = Field(gte=0)
     total: float | None = Field(gte=0)

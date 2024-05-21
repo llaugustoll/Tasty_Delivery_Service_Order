@@ -20,7 +20,7 @@ class OrderRepository(IOrderRepository):
 
     def create(self, obj):
         try:
-            self.db.add_all(obj)
+            self.db.add(obj)
             self.db.flush()
             # self.db.refresh(obj)
             self.db.commit()
@@ -42,9 +42,6 @@ class OrderRepository(IOrderRepository):
             self.db.delete(order)
             self.db.commit()
         return None
-
-    def get_by_client(self, client_id) -> List[OrderDb]:
-        return self.db.query(OrderDb).filter(OrderDb.client_id == client_id).all()
 
     def update_status(self, _id, status):
         self.db.query(OrderDb).filter(OrderDb.id == _id).update(status)

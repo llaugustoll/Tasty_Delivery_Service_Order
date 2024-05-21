@@ -86,19 +86,6 @@ class OrderController:
             status_code=200,
             response_model_exclude_none=True
         )
-        self.router.add_api_route(
-            path="/client/{id}",
-            endpoint=self.order_by_client,
-            methods=["GET"],
-            response_model=List[OrderOUT],
-            responses={
-                200: {"model": List[OrderOUT]},
-                404: {"model": ObjectNotFound},
-                409: {"model": ObjectDuplicated}
-            },
-            status_code=200,
-            response_model_exclude_none=True
-        )
 
         self._order_case = order_case
 
@@ -113,12 +100,6 @@ class OrderController:
         Lista pedidos por {id}
         """
         return self._order_case(db).get_by_id(_id)
-
-    async def order_by_client(self, client_id: UUID, db=Depends(get_db)):
-        """
-        Lista pedidos por {client_id}
-        """
-        return self._order_case(db).get_by_client(client_id)
 
     async def create(self, order: OrderIN, db=Depends(get_db)):
         """

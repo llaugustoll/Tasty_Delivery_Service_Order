@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from adapter.database.models.order import Order as OrderDB
 from adapter.repositories.order_repository import OrderRepository
 from core.application.use_cases.order.iorder_case import IOrderCase
-from core.domain.entities.order import OrderIN, OrderOUT, OrderUpdate, Product
+from core.domain.entities.order import OrderIN, OrderOUT, OrderUpdate
 from core.domain.exceptions.exception import DuplicateObject, ObjectNotFound, InvalidStatus
 from core.domain.value_objects.order_status import OrderStatus
 from logger import logger
@@ -30,10 +30,10 @@ class OrderCase(IOrderCase):
         for order in results:
             order_out = {
                 "order_id": order.id,
-                "client_id": order.client_id,
                 "discount": order.discount,
                 "total": order.total,
-                "status": order.status
+                "status": order.status,
+                "products": []
             }
 
             saida.append(
@@ -51,29 +51,26 @@ class OrderCase(IOrderCase):
 
         order_out = {
             "order_id": result.id,
-            "client_id": result.client_id,
             "discount": result.discount,
             "total": result.total,
-            "status": result.status
+            "status": result.status,
+            "products": []
         }
 
         return OrderOUT(**order_out)
 
     def create(self, order: OrderIN) -> OrderOUT:
-        client_id = self.current_user.id if self.current_user else None
         try:
             orderdb = OrderDB(
                 total=order.total,
                 discount=order.discount,
                 status=OrderCase.RECEBIDO,
-                client_id=client_id,
             )
 
-            result = self.repository.create()
+            result = self.repository.create(orderdb)
 
             return OrderOUT(
-                order_id=result[0].order_id,
-                client_id=orderdb.client_id,
+                order_id=result.id,
                 discount=orderdb.discount,
                 total=orderdb.total,
                 status=orderdb.status,
@@ -90,23 +87,20 @@ class OrderCase(IOrderCase):
     def update_status(self, _id, status: str) -> OrderOUT:
         new_status = status.upper()
 
-        client_id = self.current_user.id if self.current_user else None
-
         if new_status not in OrderCase.AVAILABLE_STATUS:
             raise InvalidStatus(status_code=400, msg=f"Status {status} não é valido.")
 
         result = self.repository.update_status(
             _id,
-            {"status": new_status, "updated_by": client_id.id}
+            {"status": new_status, "updated_by": "1"}
         )
 
         return OrderOUT(
             order_id=result.id,
-            client_id=result.client_id,
             discount=result.discount,
             total=result.total,
             status=result.status,
-            products=result.products
+            products=[]
         )
 
     def update(self, _id, new_values: OrderUpdate) -> OrderOUT:
