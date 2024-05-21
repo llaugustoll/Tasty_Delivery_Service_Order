@@ -1,14 +1,15 @@
 
+
 from sqlalchemy.exc import IntegrityError
 
-from tasty_delivery.adapter.database.models.order import Order as OrderDB
-from tasty_delivery.adapter.database.models.order_product_association import OrderProductAssociation
-from tasty_delivery.adapter.repositories.order_repository import OrderRepository
-from tasty_delivery.core.application.use_cases.order.iorder_case import IOrderCase
-from tasty_delivery.core.domain.entities.order import OrderIN, OrderOUT, OrderUpdate, Product
-from tasty_delivery.core.domain.exceptions.exception import DuplicateObject, ObjectNotFound, InvalidStatus
-from tasty_delivery.core.domain.value_objects.order_status import OrderStatus
-from tasty_delivery.logger import logger
+from adapter.database.models.order import Order as OrderDB
+from adapter.database.models.order_product_association import OrderProductAssociation
+from adapter.repositories.order_repository import OrderRepository
+from core.application.use_cases.order.iorder_case import IOrderCase
+from core.domain.entities.order import OrderIN, OrderOUT, OrderUpdate, Product
+from core.domain.exceptions.exception import DuplicateObject, ObjectNotFound, InvalidStatus
+from core.domain.value_objects.order_status import OrderStatus
+from logger import logger
 
 
 class OrderCase(IOrderCase):

@@ -3,7 +3,7 @@ from typing import List
 from uuid import UUID
 from pydantic import BaseModel, Field
 
-from tasty_delivery.core.domain.entities.base import Base
+from core.domain.entities.base import Base
 
 
 class Product(BaseModel):

@@ -3,9 +3,9 @@ from typing import List
 
 from sqlalchemy.exc import IntegrityError
 
-from tasty_delivery.adapter.database.models.order import Order as OrderDb
-from tasty_delivery.adapter.database.models.order_product_association import OrderProductAssociation
-from tasty_delivery.core.domain.repositories.iorder_repository import IOrderRepository
+from adapter.database.models.order import Order as OrderDb
+from adapter.database.models.order_product_association import OrderProductAssociation
+from core.domain.repositories.iorder_repository import IOrderRepository
 
 
 class OrderRepository(IOrderRepository):

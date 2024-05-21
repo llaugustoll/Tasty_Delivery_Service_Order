@@ -1,7 +1,7 @@
 
 from abc import abstractmethod
 
-from tasty_delivery.core.domain.repositories.ibase_repository import IBaseRepository
+from core.domain.repositories.ibase_repository import IBaseRepository
 
 
 class IOrderRepository(IBaseRepository):

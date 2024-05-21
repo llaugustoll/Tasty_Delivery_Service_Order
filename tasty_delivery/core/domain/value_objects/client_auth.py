@@ -2,7 +2,7 @@
 from typing import Annotated, List
 from pydantic import Field
 
-from tasty_delivery.core.domain.entities.base import Base
+from core.domain.entities.base import Base
 
 
 class ClientAuth(Base):

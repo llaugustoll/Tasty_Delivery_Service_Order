@@ -3,9 +3,8 @@ from datetime import datetime
 
 from sqlalchemy import Column, String, Float, Boolean, TIMESTAMP, Integer
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.associationproxy import association_proxy
 
-from tasty_delivery.adapter.database.db import Base
+from adapter.database.db import Base
 
 
 class Order(Base):

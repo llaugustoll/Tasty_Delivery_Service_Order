@@ -4,7 +4,7 @@ from uuid import UUID
 from sqlalchemy import ForeignKey, Integer, Column
 from sqlalchemy.orm import Mapped, mapped_column
 
-from tasty_delivery.adapter.database.db import Base
+from adapter.database.db import Base
 
 
 class OrderProductAssociation(Base):

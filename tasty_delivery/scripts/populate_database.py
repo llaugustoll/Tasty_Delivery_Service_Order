@@ -5,7 +5,7 @@ from uuid import uuid4
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
 
-from tasty_delivery.adapter.database.db import get_db
+from adapter.database.db import get_db
 
 
 def populate():

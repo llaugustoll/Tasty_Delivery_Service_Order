@@ -4,10 +4,10 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends
 
-from tasty_delivery.adapter.database.db import get_db
-from tasty_delivery.core.application.use_cases.order.order_case import OrderCase
-from tasty_delivery.core.domain.entities.order import OrderOUT, OrderIN, OrderUpdate
-from tasty_delivery.core.domain.exceptions.exception_schema import ObjectNotFound, ObjectDuplicated
+from adapter.database.db import get_db
+from core.application.use_cases.order.order_case import OrderCase
+from core.domain.entities.order import OrderOUT, OrderIN, OrderUpdate
+from core.domain.exceptions.exception_schema import ObjectNotFound, ObjectDuplicated
 
 
 class OrderController:

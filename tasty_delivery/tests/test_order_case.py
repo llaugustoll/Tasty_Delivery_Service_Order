@@ -2,10 +2,10 @@
 import unittest
 
 from unittest.mock import MagicMock
-from tasty_delivery.core.application.use_cases.order.order_case import OrderCase
-from tasty_delivery.adapter.repositories.order_repository import OrderRepository
-from tasty_delivery.core.domain.exceptions.exception import ObjectNotFound
-from tasty_delivery.core.domain.entities.order import OrderIN, OrderOUT
+from core.application.use_cases.order.order_case import OrderCase
+from adapter.repositories.order_repository import OrderRepository
+from core.domain.exceptions.exception import ObjectNotFound
+from core.domain.entities.order import OrderIN, OrderOUT
 
 
 class TestOrderCase(unittest.TestCase):

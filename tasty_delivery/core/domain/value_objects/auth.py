@@ -1,7 +1,7 @@
 
 from pydantic import BaseModel, Field, field_validator, validate_email
 
-from tasty_delivery.core.domain.exceptions.exception import InvalidEmail
+from core.domain.exceptions.exception import InvalidEmail
 
 
 class Auth(BaseModel):
