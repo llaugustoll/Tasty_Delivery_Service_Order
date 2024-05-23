@@ -1,7 +1,5 @@
-
-from pydantic import BaseModel, Field, field_validator, validate_email
-
 from core.domain.exceptions.exception import InvalidEmail
+from pydantic import BaseModel, Field, field_validator, validate_email
 
 
 class Auth(BaseModel):

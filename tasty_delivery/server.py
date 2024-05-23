@@ -4,11 +4,8 @@ from fastapi.responses import PlainTextResponse
 from pydantic import ValidationError
 
 from adapter.api.controllers.order_controller import OrderController
-
 from core.application.use_cases.order.order_case import OrderCase
-
 from scripts.populate_database import populate
-
 
 app = FastAPI(title="Tasty Delivery")
 
@@ -21,6 +18,7 @@ async def validation_exception_handler(request, exc):
 @app.exception_handler(ResponseValidationError)
 async def validation_exception_handler(request, exc):
     return PlainTextResponse(str(exc), status_code=422)
+
 
 # Orders
 order_controller = OrderController(OrderCase)

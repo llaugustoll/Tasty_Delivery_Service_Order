@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, Field
 
 OBJECT_NOT_FOUND_MESSAGE = "Objeto não encontrado"

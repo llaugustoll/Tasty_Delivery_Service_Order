@@ -1,4 +1,3 @@
-
 from typing import List
 
 from sqlalchemy.exc import IntegrityError

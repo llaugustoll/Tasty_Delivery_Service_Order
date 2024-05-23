@@ -1,12 +1,10 @@
-
 from typing import List
-from uuid import UUID
 
+from core.application.use_cases.order.order_case import OrderCase
+from core.domain.entities.order import OrderOUT, OrderIN, OrderUpdate
 from fastapi import APIRouter, Depends
 
 from adapter.database.db import get_db
-from core.application.use_cases.order.order_case import OrderCase
-from core.domain.entities.order import OrderOUT, OrderIN, OrderUpdate
 from core.domain.exceptions.exception_schema import ObjectNotFound, ObjectDuplicated
 
 

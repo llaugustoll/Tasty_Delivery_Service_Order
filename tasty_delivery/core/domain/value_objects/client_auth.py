@@ -1,5 +1,5 @@
-
 from typing import Annotated, List
+
 from pydantic import Field
 
 from core.domain.entities.base import Base

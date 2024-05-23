@@ -1,7 +1,3 @@
-
-from datetime import datetime
-
-from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
 
 from adapter.database.db import get_db
